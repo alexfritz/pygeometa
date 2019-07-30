@@ -111,3 +111,37 @@ facility:
               valid_period:
                   begin: 2000-11-11
                   end: now # optional
+        observation:
+            - program_affiliation: [GOS, WIGOSnonAffiliated]
+              geometry: point
+              deployment:
+                  - local_reference_surface: naturalGround
+                    height_above_local_reference_surface:
+                        height: 1.5
+                        unit: m
+                    valid_period:
+                        begin: 1999-11-11
+                        end: 2000-11-11
+                    source_of_observation: humanObservation
+                  - local_reference_surface: naturalGround
+                    height_above_local_reference_surface:
+                        height: 2
+                        unit: m
+                    valid_period:
+                        begin: 2000-11-11
+                        end: now # optional
+                    source_of_observation: automaticReading
+              observed_property: 216
+            - program_affiliation: [GOS]
+              geometry: point
+              deployment:
+                  - local_reference_surface: naturalGround
+                    height_above_local_reference_surface:
+                        height: 2
+                        unit: m
+                    valid_period:
+                        begin: 2000-11-11
+                        end: now # optional
+                    source_of_observation: automaticReading
+              observed_property: 224
+            

@@ -8,7 +8,7 @@ MCF constructs.
 
 ## Codes
 
-Codes for WMO WIGOS are available at http://test.wmocodes.info/wmdr
+Codes for WMO WIGOS are available at https://github.com/wmo-im/wmds/tree/master/tables_en
 
 ## Sections
 
@@ -120,3 +120,24 @@ relative_elevation|Optional|Relative elevation of the observing facility compare
 topographic_context|Optional|Topographic context of the observing facility, from the TopographicContext codelist (http://test.wmocodes.info/wmdr/_TopographicContext)|`plains`|WIGOS Metadata Representation, Section 4.3.2
 altitude_or_depth|Optional|Altitude or depth of observing facility, from the AltitudeOrDepth codelist (http://test.wmocodes.info/wmdr/_AltitudeOrDepth)|`middleAltitude`|WIGOS Metadata Representation, Section 4.3.2
 valid_period|Optional|Specifies at least the begin date. If omitted, the dateEstablished of the facility will be assumed|`begin:2011-11-11`, `end: now`|WIGOS Metadata Representation, Section 4.3.2
+
+#### `observation`
+The `observation` object is a child of the `facility` object and
+allows for specifying 0..n child objects to model various observations at the facility. 
+
+Property Name|Mandatory/Optional|Description|Example|Reference
+-------------|------------------|-----------|-------|---------:
+program_affiliation|Mandatory|Program Affiliation, see http://test.wmocodes.info/wmdr/ProgramAffiliation|`GOS,CLIMATc`|
+geometry|Mandatory|From the spatial extend or geometry codelist https://github.com/wmo-im/wmds/blob/Development/tables_en/1-04.csv|`point`|
+observed_property|Mandatory|From one of the ObservedVariable codelist https://github.com/wmo-im/wmds/tree/master/tables_en 1-01-01.csv - 1-01-05.csv|`216`|
+
+#### `deployment`
+The `deployment` object is a child of the `observation` object and allows for specifying 1..n child objects. At least one child object is required.
+Property Name|Mandatory/Optional|Description|Example|Reference
+
+Property Name|Mandatory/Optional|Description|Example|Reference
+-------------|------------------|-----------|-------|---------:
+local_reference_surface|Conditional|From the type of reference surface codelist https://github.com/wmo-im/wmds/blob/Development/tables_en/5-05.csv|`naturalGround`|
+height_above_local_reference_surface|Conditional|Height (with unit) above/below local reference surface|`height:2`, `unit:m`|
+valid_period|Optional|Specifies at least the begin date. If omitted, the dateEstablished of the facility will be assumed|`begin:2011-11-11`, `end: now`|WIGOS Metadata Representation, Section 4.3.2
+source_of_observation|Mandatory|From the sourceOfObservation codelist https://github.com/wmo-im/wmds/blob/Development/tables_en/5-01.csv|`automaticReading`|
