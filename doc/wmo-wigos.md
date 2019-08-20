@@ -6,6 +6,9 @@ enhancements in pygeometa.
 pygeometa's MCF model for WIGOS Metadata inherits as well as extends the core
 MCF constructs.
 
+## Reference:
+WIGOS Metadata Representation - Specification of data model and xml schema 1.0RC9 [WIGOS Metadata Representation](http://www.wmo.int/schemas/wmdr/1.0RC9/documentation/WMDR_ModelAndSchemaSpecification.pdf)
+
 ## Codes
 
 Codes for WMO WIGOS are available at https://github.com/wmo-im/wmds/tree/master/tables_en
@@ -39,13 +42,23 @@ type|Mandatory|The type of the observing facility from the Station/platform type
 geopositioning_method|Optional|Element describes the geospatial refer ence system used for the specified geolocation (codelist http://test.wmocodes.info/wmdr/_GeopositioningMethod)|gps|WIGOS Metadata Representation, Section 4.2.2
 url|Optional|An online resource containing additional information about the facility or equipment|https://example.org/station/123|WIGOS Metadata Representation, Section 4.2.2
 date_established|Mandatory|Date at which the observingFacility was established. Normally considered to be the date the first observations were made|2011-11-11T11:11:11Z|WIGOS Metadata Representation, Section 4.3.2
-wmo_region|Mandatory|The WMO region the observing facility is located in, from the WMORegionType codelist (http://test.wmocodes.info/wmdr/_WMORegion)|northCentralAmericaCaribbean|WIGOS Metadata Representation, Section 4.3.2
+wmo_region|Conditional|Mandatory for fixed land-based stations; The WMO region the observing facility is located in, from the WMORegionType codelist (http://test.wmocodes.info/wmdr/_WMORegion)|northCentralAmericaCaribbean|WIGOS Metadata Representation, Section 4.3.2
+
+child objects:
+* territory
+* spatiotemporal
+* program_affiliation
+* climate_zone
+* surface_cover
+* surface_roughness
+* topography_bathymetry
+* observation
 
 #### `territory`
 
 The `territory` object is a child of the `facility` object and
-allows for specifying 1..n child objects to model changing territory names
-over time.  At least one child object is required.
+allows for specifying 0..n child objects to model changing territory names
+over time.  For fixed land-based stations at least one child object is required. For other stations types it may be omitted.
 
 Property Name|Mandatory/Optional|Description|Example|Reference
 -------------|------------------|-----------|-------|---------:
@@ -60,8 +73,8 @@ over time.  At least one child object is required.
 
 Property Name|Mandatory/Optional|Description|Example|Reference
 -------------|------------------|-----------|-------|---------:
-timeperiod|Mandatory|Specifies at least the begin date accompanying the location|`begin:2011-11-11`, `end: now`|WIGOS Metadata Representation, Section 7.9
-location|Mandatory.  The location property includes a `crs` property (EPSG code), and `point` property (x,y,z)|Representative or conventional geospatial location of observing facility, the reference location. This will always be a point location, but this location can change with time. |`crs: 4326, point: -75,45,400`, `end: now`|WIGOS Metadata Representation, Section 7.9
+timeperiod|Mandatory|Specifies at least the begin date accompanying the location|`begin:2011-11-11`, `end: now`|WIGOS Metadata Representation, Section 4.2.3.2
+location|Mandatory.  The location property includes a `crs` property (EPSG code), and `point` property (x,y,z)|Representative or conventional geospatial location of observing facility, the reference location. This will always be a point location, but this location can change with time. |`crs: 4326, point: -75,45,400`, `end: now`|WIGOS Metadata Representation, Section 4.2.3.2
 
 #### `program_affiliation`
 The `program_affiliation` object is a child of the `facility` object and
@@ -71,6 +84,9 @@ Property Name|Mandatory/Optional|Description|Example|Reference
 -------------|------------------|-----------|-------|---------:
 program|Mandatory|Program Affiliation, see http://test.wmocodes.info/wmdr/ProgramAffiliation|`GOS`|WIGOS Metadata Representation, Section 4.3.2
 
+child objects:
+* reporting_status
+
 #### `reporting_status`
 The `reporting_status` object is a child of the `program_affiliation` object and
 allows for specifying 1..n child objects to model program affiliations reporting status
@@ -78,7 +94,7 @@ over time.
 
 Property Name|Mandatory/Optional|Description|Example|Reference
 -------------|------------------|-----------|-------|---------:
-status|Mandatory|Declared reporting status of the observing facility from the ReportingStatusType codelist (http://test.wmocodes.info/wmdr/_ReportingStatus)|`oerational`|
+status|Mandatory|Declared reporting status of the observing facility from the ReportingStatusType codelist (http://test.wmocodes.info/wmdr/_ReportingStatus)|`oerational`|WIGOS Metadata Representation, Section 4.3.3.7
 valid_period|Optional|Specifies at least the begin date of the indicated reportingStatus.|`begin:2011-11-11`, `end: now`|
 
 #### `climate_zone`
@@ -87,8 +103,8 @@ allows for specifying 0..n child objects to model changing climate zones over ti
 
 Property Name|Mandatory/Optional|Description|Example|Reference
 -------------|------------------|-----------|-------|---------:
-name|Mandatory|Climate zone of the observing facility, from the ClimateZone codelist (http://test.wmocodes.info/wmdr/_ClimateZone)|`snowFullyHumidCoolSummer`|WIGOS Metadata Representation, Section 4.3.2
-valid_period|Optional|Specifies at least the begin date of the indicated climate zone. If omitted, the dateEstablished of the facility will be assumed|`begin:2011-11-11`, `end: now`|WIGOS Metadata Representation, Section 4.3.2
+name|Mandatory|Climate zone of the observing facility, from the ClimateZone codelist (http://test.wmocodes.info/wmdr/_ClimateZone)|`snowFullyHumidCoolSummer`|WIGOS Metadata Representation, Section 4.3.3.3
+valid_period|Optional|Specifies at least the begin date of the indicated climate zone. If omitted, the dateEstablished of the facility will be assumed|`begin:2011-11-11`, `end: now`|
 
 #### `surface_cover`
 The `surface_cover` object is a child of the `facility` object and
@@ -96,9 +112,9 @@ allows for specifying 0..n child objects to model changing surface covers over t
 
 Property Name|Mandatory/Optional|Description|Example|Reference
 -------------|------------------|-----------|-------|---------:
-name|Mandatory|Predominant surface cover, from the given surface cover classification scheme and the SurfaceCover codelist (http://test.wmocodes.info/wmdr/_SurfaceCover)|`rainfedCroplands`|WIGOS Metadata Representation, Section 4.3.2
-surface_cover_classification|Mandatory|Surface cover classification scheme, from the SurfaceCoverClassification codelist (http://test.wmocodes.info/wmdr/_SurfaceCoverClassification)|`globCover2009`|WIGOS Metadata Representation, Section 4.3.2
-valid_period|Optional|Specifies at least the begin date. If omitted, the dateEstablished of the facility will be assumed|`begin:2011-11-11`, `end: now`|WIGOS Metadata Representation, Section 4.3.2
+name|Mandatory|Predominant surface cover, from the given surface cover classification scheme and the SurfaceCover codelist (http://test.wmocodes.info/wmdr/_SurfaceCover)|`rainfedCroplands`|WIGOS Metadata Representation, Section 4.3.3.4
+surface_cover_classification|Mandatory|Surface cover classification scheme, from the SurfaceCoverClassification codelist (http://test.wmocodes.info/wmdr/_SurfaceCoverClassification)|`globCover2009`|WIGOS Metadata Representation, Section 4.3.3.4
+valid_period|Optional|Specifies at least the begin date. If omitted, the dateEstablished of the facility will be assumed|`begin:2011-11-11`, `end: now`|
 
 #### `surface_roughness`
 The `surface_roughness` object is a child of the `facility` object and
@@ -106,8 +122,8 @@ allows for specifying 0..n child objects.
 
 Property Name|Mandatory/Optional|Description|Example|Reference
 -------------|------------------|-----------|-------|---------:
-name|Mandatory|Surface roughness of surrounding of the observing facility, from the SurfaceRoughness codelist (http://test.wmocodes.info/wmdr/_SurfaceRoughness)|`rough`|WIGOS Metadata Representation, Section 4.3.2
-valid_period|Optional|Specifies at least the begin date of the indicated surface roughness. If omitted, the dateEstablished of the facility will be assumed|`begin:2011-11-11`, `end: now`|WIGOS Metadata Representation, Section 4.3.2
+name|Mandatory|Surface roughness of surrounding of the observing facility, from the SurfaceRoughness codelist (http://test.wmocodes.info/wmdr/_SurfaceRoughness)|`rough`|WIGOS Metadata Representation, Section 4.3.3.5
+valid_period|Optional|Specifies at least the begin date of the indicated surface roughness. If omitted, the dateEstablished of the facility will be assumed|`begin:2011-11-11`, `end: now`|
 
 #### `topography_bathymetry`
 The `topography_bathymetry` object is a child of the `facility` object and
@@ -115,11 +131,11 @@ allows for specifying 0..n child objects to model topography or bathymetry descr
 
 Property Name|Mandatory/Optional|Description|Example|Reference
 -------------|------------------|-----------|-------|---------:
-local_topography|Optional|Local topography of the observing facility from the LocalTopography codelist (http://test.wmocodes.info/wmdr/_LocalTopography)|`flat`|WIGOS Metadata Representation, Section 4.3.2
-relative_elevation|Optional|Relative elevation of the observing facility compared to its surrounding, from the RelativeElevation codelist (http://test.wmocodes.info/wmdr/_RelativeElevation)|`inapplicable`|WIGOS Metadata Representation, Section 4.3.2
-topographic_context|Optional|Topographic context of the observing facility, from the TopographicContext codelist (http://test.wmocodes.info/wmdr/_TopographicContext)|`plains`|WIGOS Metadata Representation, Section 4.3.2
-altitude_or_depth|Optional|Altitude or depth of observing facility, from the AltitudeOrDepth codelist (http://test.wmocodes.info/wmdr/_AltitudeOrDepth)|`middleAltitude`|WIGOS Metadata Representation, Section 4.3.2
-valid_period|Optional|Specifies at least the begin date. If omitted, the dateEstablished of the facility will be assumed|`begin:2011-11-11`, `end: now`|WIGOS Metadata Representation, Section 4.3.2
+local_topography|Optional|Local topography of the observing facility from the LocalTopography codelist (http://test.wmocodes.info/wmdr/_LocalTopography)|`flat`|WIGOS Metadata Representation, Section 4.3.3.6
+relative_elevation|Optional|Relative elevation of the observing facility compared to its surrounding, from the RelativeElevation codelist (http://test.wmocodes.info/wmdr/_RelativeElevation)|`inapplicable`|WIGOS Metadata Representation, Section 4.3.3.6
+topographic_context|Optional|Topographic context of the observing facility, from the TopographicContext codelist (http://test.wmocodes.info/wmdr/_TopographicContext)|`plains`|WIGOS Metadata Representation, Section 4.3.3.62
+altitude_or_depth|Optional|Altitude or depth of observing facility, from the AltitudeOrDepth codelist (http://test.wmocodes.info/wmdr/_AltitudeOrDepth)|`middleAltitude`|WIGOS Metadata Representation, Section 4.3.3.6
+valid_period|Optional|Specifies at least the begin date. If omitted, the dateEstablished of the facility will be assumed|`begin:2011-11-11`, `end: now`|
 
 #### `observation`
 The `observation` object is a child of the `facility` object and
@@ -129,15 +145,49 @@ Property Name|Mandatory/Optional|Description|Example|Reference
 -------------|------------------|-----------|-------|---------:
 program_affiliation|Mandatory|Program Affiliation, see http://test.wmocodes.info/wmdr/ProgramAffiliation|`GOS,CLIMATc`|
 geometry|Mandatory|From the spatial extend or geometry codelist https://github.com/wmo-im/wmds/blob/Development/tables_en/1-04.csv|`point`|
-observed_property|Mandatory|From one of the ObservedVariable codelist https://github.com/wmo-im/wmds/tree/master/tables_en 1-01-01.csv - 1-01-05.csv|`216`|
+observed_property|Mandatory|From one of the ObservedVariable codelist https://github.com/wmo-im/wmds/tree/master/tables_en 1-01-01.csv - 1-01-05.csv|`216`|WIGOS Metadata Representation, Section 6.2.5
+
+child objects:
+* deployment
 
 #### `deployment`
 The `deployment` object is a child of the `observation` object and allows for specifying 1..n child objects. At least one child object is required.
-Property Name|Mandatory/Optional|Description|Example|Reference
 
 Property Name|Mandatory/Optional|Description|Example|Reference
 -------------|------------------|-----------|-------|---------:
-local_reference_surface|Conditional|From the type of reference surface codelist https://github.com/wmo-im/wmds/blob/Development/tables_en/5-05.csv|`naturalGround`|
-height_above_local_reference_surface|Conditional|Height (with unit) above/below local reference surface|`height:2`, `unit:m`|
-valid_period|Optional|Specifies at least the begin date. If omitted, the dateEstablished of the facility will be assumed|`begin:2011-11-11`, `end: now`|WIGOS Metadata Representation, Section 4.3.2
-source_of_observation|Mandatory|From the sourceOfObservation codelist https://github.com/wmo-im/wmds/blob/Development/tables_en/5-01.csv|`automaticReading`|
+local_reference_surface|Conditional|Mandatory for instrumental observations or if proximity of ref. surface impacts on observation; From the type of reference surface codelist https://github.com/wmo-im/wmds/blob/Development/tables_en/5-05.csv|`naturalGround`|WIGOS Metadata Representation, Section 7.2.2
+height_above_local_reference_surface|Conditional|Mandatory for instrumental observations or if proximity of ref. surface impacts on observation; Height (with unit) above/below local reference surface|`height:2`, `unit:m`|WIGOS Metadata Representation, Section 7.2.2
+valid_period|Mandatory|Specifies at least the begin date. If omitted, the dateEstablished of the facility will be assumed|`begin:2011-11-11`, `end: now`|
+application_area|Mandatory|Application area(s) from the ApplicationAreas codelist https://github.com/wmo-im/wmds/blob/Development/tables_en/2-01.csv, at least one is required|`nowcasting`,`climateMonitoring`|WIGOS Metadata Representation, Section 7.2.2
+source_of_observation|Mandatory|From the sourceOfObservation codelist https://github.com/wmo-im/wmds/blob/Development/tables_en/5-01.csv|`automaticReading`|WIGOS Metadata Representation, Section 7.2.2
+communication_method|Optional|From the Data communication metehod codelist https://github.com/wmo-im/wmds/blob/Development/tables_en/3-08.csv|`dataCellular`|WIGOS Metadata Representation, Section 7.2.2
+exposure|Conditional|Mandatory for instrumental observations; From the Exposure codelist https://github.com/wmo-im/wmds/blob/Development/tables_en/5-15.csv|`class1`|WIGOS Metadata Representation, Section 7.2.2
+representativeness|Optional|From the Representativeness codelist https://github.com/wmo-im/wmds/blob/Development/tables_en/1-05.csv|`toposcale`|WIGOS Metadata Representation, Section 7.2.2
+
+Child objects:
+* data_generation
+
+#### `data_generation`
+The `data_generation` object is a child of the `deployment` and allows for specifying 1..n child objects. At least one child object is required.
+
+Property Name|Mandatory/Optional|Description|Example|Reference
+-------------|------------------|-----------|-------|---------:
+valid_period|Mandatory|The period of time for which this processing arrangement was/is in place. (Note: this time period must fall within the time period specified in the Deployment). Specifies at least the begin date.|`begin:2011-11-11`, `end: now`|
+
+Child objects:
+* schedule
+* sampling
+* processing
+* reporting
+
+#### 'reporting'
+The `data_generation` object is a child of the `deployment` object. Exactly one child object is required.
+
+Property Name|Mandatory/Optional|Description|Example|Reference
+-------------|------------------|-----------|-------|---------:
+international_exchange|Mandatory|A binary element (True/False), that should be associated with the observed variable for each declared observing schedule (temporal_reporting_period) |`True`|Element 7-14  from the WIGSO Metadata Standard
+measurement_unit|Mandatory|Unit of measurement from the Measurement unit codelist https://github.com/wmo-im/wmds/blob/Development/tables_en/1-02.csv|`Cel`|WIGOS Metadata Representation, Section 7.7.2
+temporal_reporting_interval|Mandatory|Time interval over which the observed variable is reported. Note that this is a temporal distance, e.g., (every) 1 hour. Use ISO8601 notation. |`PT1H`|WIGOS Metadata Representation, Section 7.7.2
+time_stamp_meaning|Optional|Meaning of the time stamp in the temporalReportingInterval taken from the TimeStampMeaning codelist.https://github.com/wmo-im/wmds/blob/Development/tables_en/11-03.csv|`end`|WIGOS Metadata Representation, Section 7.7.2 
+
+

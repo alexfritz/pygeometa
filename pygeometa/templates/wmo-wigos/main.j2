@@ -192,9 +192,9 @@
             
             <!--[[OBSERVATIONS]]-->
             {% for obs in v['observation'] %}
-            {% set outer_loop = loop %}
+            {% set obs_loop = loop %}
                 <wmdr:observation>
-                    <wmdr:ObservingCapability gml:id="id-obs_{{ outer_loop.index }}_stat">
+                    <wmdr:ObservingCapability gml:id="id-obs_{{ obs_loop.index }}_stat">
                         <wmdr:facility xlink:href="http://data.wmo.int/wigos/{{ v['identifier'] }}"/>
                         <!--[[PROGRAM_AFFILIATIONS]]-->
                         {% for pa_obs in obs['program_affiliation'] %}
@@ -202,22 +202,58 @@
                         {% endfor %}
                         
                         {% for obs_depl in obs['deployment'] %}
+                        {% set depl_loop = loop %}
                         <wmdr:observation>
-                            <om:OM_Observation gml:id="id-obs_{{ outer_loop.index }}_geom_{{ loop.index }}">
-                                <om:type xlink:href="http://codes.wmo.int/wmdr/{{ obs['geometry'] }}"/>
+                            <om:OM_Observation gml:id="id-obs_{{ obs_loop.index }}_geom_{{ depl_loop.index }}">
+                                <om:type xlink:href="http://codes.wmo.int/wmdr/featureOfInterest/{{ obs['geometry'] }}"/>
                                 <om:metadata>
                                     <!--link to WIS metadata record goes here if available-->
                                 </om:metadata>
                                 <om:phenomenonTime/>
                                 <om:resultTime/>
                                 <om:procedure>
-                                    <wmdr:Process gml:id="id-obs_{{ outer_loop.index }}_proc_{{ loop.index }}">
+                                    <wmdr:Process gml:id="id-obs_{{ obs_loop.index }}_proc_{{ depl_loop.index }}">
                                         <wmdr:deployment>
-                                            <wmdr:Deployment gml:id="id-obs_{{ outer_loop.index }}_dep_{{ loop.index }}">
+                                            <wmdr:Deployment gml:id="id-obs_{{ obs_loop.index }}_dep_{{ depl_loop.index }}">
                                                 <wmdr:deployedEquipment/>
-                                                <wmdr:dataGeneration/>
+                                                {% for obs_depl_dg in obs_depl['data_generation']%}
+                                                {% set dg_loop = loop %}
+                                                <wmdr:dataGeneration>
+                                                    <wmdr:DataGeneration gml:id="id-obs_{{ obs_loop.index }}_dep_{{ depl_loop.index }}_dg_{{ dg_loop.index }}">
+                                                        <wmdr:validPeriod>
+                                                            <gml:TimePeriod gml:id="id-obs_{{ obs_loop.index }}_dep_{{ depl_loop.index }}_dg_{{ dg_loop.index }}_vp ">
+                                                                <gml:beginPosition>{{ obs_depl_dg['valid_period']['begin'] }}</gml:beginPosition>
+                                                                {% if obs_depl_dg['valid_period']['end'] %}
+                                                                    <gml:endPosition>{{ obs_depl_dg['valid_period']['end'] }}</gml:endPosition>
+                                                                {% else %}
+                                                                    <gml:endPosition indeterminatePosition="now"/>
+                                                                {% endif %}
+                                                            </gml:TimePeriod>
+                                                        </wmdr:validPeriod>
+                                                        <wmdr:schedule>
+                                                            <wmdr:Schedule/> <!-- TODO -->
+                                                        </wmdr:schedule>
+                                                        <wmdr:sampling>
+                                                            <wmdr:Sampling/> <!-- TODO -->
+                                                        </wmdr:sampling>
+                                                        {% if obs_depl_dg['processing'] %}
+                                                            <wmdr:processing /> <!-- TODO  optional -->
+                                                        {% endif %}
+                                                        <wmdr:reporting>
+                                                            <wmdr:Reporting>
+                                                                <wmdr:internationalExchange>{{ obs_depl_dg['reporting']['international_exchange'] }}</wmdr:internationalExchange> 
+                                                                <wmdr:uom xlink:href="http://codes.wmo.int/wmdr/{{ obs_depl_dg['reporting']['measurement_unit'] }}"/>
+                                                                <wmdr:temporalReportingInterval>{{ obs_depl_dg['reporting']['temporal_reporting_interval'] }}</wmdr:temporalReportingInterval>
+                                                                {% if obs_depl_dg['reporting']['time_stamp_meaning'] %}
+                                                                    <wmdr:timeStampMeaning xlink:href="http://codes.wmo.int/wmdr/TimeStampMeaning/{{ obs_depl_dg['reporting']['time_stamp_meaning'] }}"/>
+                                                                {% endif %}
+                                                            </wmdr:Reporting>
+                                                        </wmdr:reporting>
+                                                    </wmdr:DataGeneration>
+                                                </wmdr:dataGeneration>
+                                                {% endfor %}
                                                 <wmdr:validPeriod>
-                                                    <gml:TimePeriod gml:id="id-obs_{{ outer_loop.index }}_dep_{{ loop.index }}_vp">
+                                                    <gml:TimePeriod gml:id="id-obs_{{ obs_loop.index }}_dep_{{ depl_loop.index }}_vp">
                                                         <gml:beginPosition>{{ obs_depl['valid_period']['begin'] }}</gml:beginPosition>
                                                         {% if obs_depl['valid_period']['end'] %}
                                                             <gml:endPosition>{{ obs_depl['valid_period']['end'] }}</gml:endPosition>
@@ -226,11 +262,26 @@
                                                         {% endif %}
                                                     </gml:TimePeriod>
                                                 </wmdr:validPeriod>
-                                                <wmdr:heightAboveLocalReferenceSurface uom="{{ obs_depl['height_above_local_reference_surface']['unit'] }}">{{ obs_depl['height_above_local_reference_surface']['height'] }}</wmdr:heightAboveLocalReferenceSurface>
-                                                <wmdr:localReferenceSurface  xlink:href="http://codes.wmo.int/wmdr/{{ obs_depl['local_reference_surface'] }}"/>
-                                                <wmdr:applicationArea xlink:href=""/>
-                                                <wmdr:sourceOfObservation xlink:href="http://codes.wmo.int/wmdr/sourceOfObservation/{{ obs_depl['source_of_observation']}}"/>
-                                                <wmdr:exposure/>
+                                                {% if obs_depl['height_above_local_reference_surface'] %}
+                                                    <wmdr:heightAboveLocalReferenceSurface uom="{{ obs_depl['height_above_local_reference_surface']['unit'] }}">{{ obs_depl['height_above_local_reference_surface']['height'] }}</wmdr:heightAboveLocalReferenceSurface>
+                                                {% endif %}
+                                                {% if obs_depl['local_reference_surface'] %}
+                                                    <wmdr:localReferenceSurface  xlink:href="http://codes.wmo.int/wmdr/{{ obs_depl['local_reference_surface'] }}"/>
+                                                {% endif %}
+                                                {% for obs_depl_aa in obs_depl['application_area'] %}
+                                                    <wmdr:applicationArea xlink:href="http://codes.wmo.int/wmdr/ApplicationArea/{{ obs_depl_aa }}"/>
+                                                {% endfor %}
+                                                <wmdr:sourceOfObservation xlink:href="http://codes.wmo.int/wmdr/sourceOfObservation/{{ obs_depl['source_of_observation'] }}"/>
+                                                {% if obs_depl['communication_method'] %}
+                                                    <wmdr:communicationMethod xlink:href="http://codes.wmo.int/wmdr/communicationMethod/{{ obs_depl['communication_method'] }}"/>
+                                                {% endif %}
+                                                {% if obs_depl['exposure'] %}
+                                                    <wmdr:exposure xlink:href="http://codes.wmo.int/wmdr/Exposure/{{ obs_depl['exposure'] }}"/>
+                                                {% endif %}
+                                                {% if obs_depl['representativeness'] %}
+                                                    <wmdr:representativeness xlink:href="http://codes.wmo.int/wmdr/Representativeness/{{ obs_depl['representativeness'] }}"/>
+                                                {% endif %}
+                                                
                                             </wmdr:Deployment>
                                         </wmdr:deployment>
                                     </wmdr:Process>

@@ -112,36 +112,70 @@ facility:
                   begin: 2000-11-11
                   end: now # optional
         observation:
-            - program_affiliation: [GOS, WIGOSnonAffiliated]
-              geometry: point
+            - program_affiliation: ['GOS', 'WIGOSnonAffiliated']
+              geometry: 'point'
               deployment:
-                  - local_reference_surface: naturalGround
-                    height_above_local_reference_surface:
-                        height: 1.5
-                        unit: m
-                    valid_period:
+                  - valid_period:
                         begin: 1999-11-11
                         end: 2000-11-11
-                    source_of_observation: humanObservation
-                  - local_reference_surface: naturalGround
-                    height_above_local_reference_surface:
-                        height: 2
-                        unit: m
-                    valid_period:
+                    application_area: ['climateMonitoring']
+                    source_of_observation: 'humanObservation'
+                    data_generation:
+                        - valid_period:
+                              begin: 1999-11-11
+                              end:  2000-11-11
+                          reporting:
+                              measurement_unit: 'hPa'
+                              temporal_reporting_interval: 'PT1H'
+                  - valid_period:
                         begin: 2000-11-11
                         end: now # optional
-                    source_of_observation: automaticReading
+                    local_reference_surface: 'naturalGround'
+                    height_above_local_reference_surface:
+                        height: 2
+                        unit: 'm'
+                    application_area: ['nowcasting','climateMonitoring']
+                    source_of_observation: 'automaticReading'
+                    exposure: 'class2'
+                    data_generation:
+                        - valid_period:
+                              begin: 2000-11-11
+                              end: now # optional
+                          reporting:
+                              international_exchange: 'true'
+                              measurement_unit: 'hPa'
+                              temporal_reporting_interval: 'PT1H'
               observed_property: 216
-            - program_affiliation: [GOS]
-              geometry: point
+            - program_affiliation: ['GOS']
+              geometry: 'point'
               deployment:
-                  - local_reference_surface: naturalGround
-                    height_above_local_reference_surface:
-                        height: 2
-                        unit: m
-                    valid_period:
+                  - valid_period:
                         begin: 2000-11-11
                         end: now # optional
-                    source_of_observation: automaticReading
+                    height_above_local_reference_surface:
+                        height: 2
+                        unit: 'm'
+                    application_area: ['nowcasting','climateMonitoring']
+                    source_of_observation: 'automaticReading'
+                    communication_method: 'dataCellular'
+                    exposure: 'class1'
+                    representativeness: 'toposcale'
+                    data_generation:
+                        - valid_period:
+                              begin: 2000-11-11
+                              end: 2001-01-01
+                          reporting:
+                              international_exchange: 'false'
+                              measurement_unit: 'K'
+                              temporal_reporting_interval: 'P1D'
+                        - valid_period:
+                              begin: 2001-01-01
+                              end: now # optional
+                          reporting:
+                              international_exchange: 'true'
+                              measurement_unit: 'Cel'
+                              temporal_reporting_interval: 'PT1H'
+                              time_stamp_meaning: 'end'
+                              
               observed_property: 224
             
