@@ -124,7 +124,17 @@ facility:
                         - valid_period:
                               begin: 1999-11-11
                               end:  2000-11-11
+                          schedule:
+                              start_month: 1
+                              end_month: 12
+                              start_weekday: 1
+                              end_weekday: 7
+                              start_hour: 0
+                              end_hour: 23
+                              start_minute: 0
+                              end_minute: 59
                           reporting:
+                              international_exchange: 'false'
                               measurement_unit: 'hPa'
                               temporal_reporting_interval: 'PT1H'
                   - valid_period:
@@ -141,6 +151,15 @@ facility:
                         - valid_period:
                               begin: 2000-11-11
                               end: now # optional
+                          schedule:
+                              start_month: 1
+                              end_month: 12
+                              start_weekday: 1
+                              end_weekday: 7
+                              start_hour: 0
+                              end_hour: 23
+                              start_minute: 0
+                              end_minute: 59
                           reporting:
                               international_exchange: 'true'
                               measurement_unit: 'hPa'
@@ -164,6 +183,16 @@ facility:
                         - valid_period:
                               begin: 2000-11-11
                               end: 2001-01-01
+                          schedule:
+                              start_month: 1
+                              end_month: 12
+                              start_weekday: 1
+                              end_weekday: 7
+                              start_hour: 0
+                              end_hour: 23
+                              start_minute: 0
+                              end_minute: 59
+                              diurnal_base_time: 23:00:00Z
                           reporting:
                               international_exchange: 'false'
                               measurement_unit: 'K'
@@ -171,6 +200,15 @@ facility:
                         - valid_period:
                               begin: 2001-01-01
                               end: now # optional
+                          schedule:
+                              start_month: 1
+                              end_month: 12
+                              start_weekday: 1
+                              end_weekday: 7
+                              start_hour: 0
+                              end_hour: 23
+                              start_minute: 0
+                              end_minute: 59
                           reporting:
                               international_exchange: 'true'
                               measurement_unit: 'Cel'

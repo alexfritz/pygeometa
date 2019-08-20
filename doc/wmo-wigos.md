@@ -180,14 +180,29 @@ Child objects:
 * processing
 * reporting
 
+#### `schedule`
+The `schedule` object is a child of the `data_generation` object. Exactly one child object is required.
+
+Property Name|Mandatory/Optional|Description|Example|Reference
+-------------|------------------|-----------|-------|---------:
+diurnal_base_time|Optional|Time (of day) to which diurnal statistics are referenced. For example, a 24 h accumulated total precipitation might refer to 0700z as the diurnal base time||WIGOS Metadata Representation, Section 7.4.2
+end_hour|Mandatory|End hour of schedule (0 to 23)|23|WIGOS Metadata Representation, Section 7.4.2
+end_minute|Mandatory|End minute of schedule (0 to 59)|0|WIGOS Metadata Representation, Section 7.4.2
+end_month|Mandatory|End month of schedule (January = 1, December = 12)|12|WIGOS Metadata Representation, Section 7.4.2
+end_weekday|Mandatory|End day of schedule (Monday = 1, Sunday = 7)|1|WIGOS Metadata Representation, Section 7.4.2
+start_hour|Mandatory|Start hour of schedule (0 to 23)|23|WIGOS Metadata Representation, Section 7.4.2
+start_minute|Mandatory|Start minute of schedule (0 to 59)|0|WIGOS Metadata Representation, Section 7.4.2
+start_month|Mandatory|Start month of schedule (January = 1, December = 12)|1|WIGOS Metadata Representation, Section 7.4.2
+start_weekday|Mandatory|Start day of schedule (Monday = 1, Sunday = 7)|7|WIGOS Metadata Representation, Section 7.4.2
+
 #### 'reporting'
-The `data_generation` object is a child of the `deployment` object. Exactly one child object is required.
+The `reporting` object is a child of the `data_generation` object. Exactly one child object is required.
 
 Property Name|Mandatory/Optional|Description|Example|Reference
 -------------|------------------|-----------|-------|---------:
 international_exchange|Mandatory|A binary element (True/False), that should be associated with the observed variable for each declared observing schedule (temporal_reporting_period) |`True`|Element 7-14  from the WIGSO Metadata Standard
 measurement_unit|Mandatory|Unit of measurement from the Measurement unit codelist https://github.com/wmo-im/wmds/blob/Development/tables_en/1-02.csv|`Cel`|WIGOS Metadata Representation, Section 7.7.2
 temporal_reporting_interval|Mandatory|Time interval over which the observed variable is reported. Note that this is a temporal distance, e.g., (every) 1 hour. Use ISO8601 notation. |`PT1H`|WIGOS Metadata Representation, Section 7.7.2
-time_stamp_meaning|Optional|Meaning of the time stamp in the temporalReportingInterval taken from the TimeStampMeaning codelist.https://github.com/wmo-im/wmds/blob/Development/tables_en/11-03.csv|`end`|WIGOS Metadata Representation, Section 7.7.2 
+time_stamp_meaning|Optional|Meaning of the time stamp in the temporalReportingInterval taken from the TimeStampMeaning codelist.https://github.com/wmo-im/wmds/blob/Development/tables_en/11-03.csv|`end`|WIGOS Metadata Representation, Section 7.7.2
 
 

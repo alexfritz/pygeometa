@@ -231,7 +231,19 @@
                                                             </gml:TimePeriod>
                                                         </wmdr:validPeriod>
                                                         <wmdr:schedule>
-                                                            <wmdr:Schedule/> <!-- TODO -->
+                                                            <wmdr:Schedule>
+                                                                <wmdr:startMonth>{{ obs_depl_dg['schedule']['start_month'] }}</wmdr:startMonth>
+                                                                <wmdr:endMonth>{{ obs_depl_dg['schedule']['end_month'] }}</wmdr:endMonth>
+                                                                <wmdr:startWeekday>{{ obs_depl_dg['schedule']['start_weekday'] }}</wmdr:startWeekday>
+                                                                <wmdr:endWeekday>{{ obs_depl_dg['schedule']['end_weekday'] }}</wmdr:endWeekday>
+                                                                <wmdr:startHour>{{ obs_depl_dg['schedule']['start_hour'] }}</wmdr:startHour>
+                                                                <wmdr:endHour>{{ obs_depl_dg['schedule']['end_hour'] }}</wmdr:endHour>
+                                                                <wmdr:startMinute>{{ obs_depl_dg['schedule']['start_minute'] }}</wmdr:startMinute>
+                                                                <wmdr:endMinute>{{ obs_depl_dg['schedule']['end_minute'] }}</wmdr:endMinute>
+                                                                {% if obs_depl_dg['schedule']['diurnal_base_time'] %}
+                                                                    <wmdr:diurnalBaseTime>{{ obs_depl_dg['schedule']['diurnal_base_time'] }}</wmdr:diurnalBaseTime>
+                                                                {% endif %}
+                                                            </wmdr:Schedule>
                                                         </wmdr:schedule>
                                                         <wmdr:sampling>
                                                             <wmdr:Sampling/> <!-- TODO -->
