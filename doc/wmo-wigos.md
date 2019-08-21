@@ -203,6 +203,5 @@ Property Name|Mandatory/Optional|Description|Example|Reference
 international_exchange|Mandatory|A binary element (True/False), that should be associated with the observed variable for each declared observing schedule (temporal_reporting_period) |`True`|Element 7-14  from the WIGSO Metadata Standard
 measurement_unit|Mandatory|Unit of measurement from the Measurement unit codelist https://github.com/wmo-im/wmds/blob/Development/tables_en/1-02.csv|`Cel`|WIGOS Metadata Representation, Section 7.7.2
 temporal_reporting_interval|Mandatory|Time interval over which the observed variable is reported. Note that this is a temporal distance, e.g., (every) 1 hour. Use ISO8601 notation. |`PT1H`|WIGOS Metadata Representation, Section 7.7.2
-time_stamp_meaning|Optional|Meaning of the time stamp in the temporalReportingInterval taken from the TimeStampMeaning codelist.https://github.com/wmo-im/wmds/blob/Development/tables_en/11-03.csv|`end`|WIGOS Metadata Representation, Section 7.7.2
-
-
+time_stamp_meaning|Optional|Meaning of the time stamp in the temporalReportingInterval taken from the TimeStampMeaning codelist https://github.com/wmo-im/wmds/blob/Development/tables_en/11-03.csv|`end`|WIGOS Metadata Representation, Section 7.7.2
+data_policy|Mandatory|Details relating to the use and limitations surrounding data imposed by the supervising organization. From the DataPolidy Codelisthttps://github.com/wmo-im/wmds/blob/Development/tables_en/9-02.csv|`WMOEssential`|WIGOS Metadata Representation, Section 7.7.2

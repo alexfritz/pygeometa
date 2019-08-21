@@ -259,6 +259,13 @@
                                                                 {% if obs_depl_dg['reporting']['time_stamp_meaning'] %}
                                                                     <wmdr:timeStampMeaning xlink:href="http://codes.wmo.int/wmdr/TimeStampMeaning/{{ obs_depl_dg['reporting']['time_stamp_meaning'] }}"/>
                                                                 {% endif %}
+                                                                {% if obs_depl_dg['reporting']['data_policy'] %}
+                                                                    <wmdr:dataPolicy>
+                                                                        <wmdr:DataPolicy>
+                                                                            <wmdr:dataPolicy xlink:href="http://codes.wmo.int/wmdr/DataPolicy/{{ obs_depl_dg['reporting']['data_policy'] }}"/>
+                                                                        </wmdr:DataPolicy>
+                                                                    </wmdr:dataPolicy>
+                                                                {% endif %}
                                                             </wmdr:Reporting>
                                                         </wmdr:reporting>
                                                     </wmdr:DataGeneration>

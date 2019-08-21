@@ -214,6 +214,6 @@ facility:
                               measurement_unit: 'Cel'
                               temporal_reporting_interval: 'PT1H'
                               time_stamp_meaning: 'end'
-                              
+                              data_policy: 'WMOAdditional'
               observed_property: 224
             
