@@ -175,8 +175,7 @@ Property Name|Mandatory/Optional|Description|Example|Reference
 -------------|------------------|-----------|-------|---------:
 manufacturer|Optional|Manufacturer of the equipment|`Logotronic`|WIGOS Metadata Representation, Section 4.5
 model|Optional|Model(number) of the equipment|`Gealog NTC Temperature Sensor`|WIGOS Metadata Representation, Section 4.5
-observing_method|Mandatory|The method of measurement/observation used from the 
-ObservingMethodType codelist. https://github.com/wmo-im/wmds/blob/Development/tables_en/5-02-01.csv - 5-02-05.csv|188|WIGOS Metadata Representation, Section 4.5
+observing_method|Mandatory|The method of measurement/observation used from the ObservingMethodType codelist. https://github.com/wmo-im/wmds/blob/Development/tables_en/5-02-01.csv - 5-02-05.csv|188|WIGOS Metadata Representation, Section 4.5
 observable_range|Optional| Intrinsic capability of the measurement/observing method - range|`-50 .. 60°C`|WIGOS Metadata Representation, Section 4.5
 
 #### `data_generation`
