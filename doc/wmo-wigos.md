@@ -165,7 +165,19 @@ exposure|Conditional|Mandatory for instrumental observations; From the Exposure 
 representativeness|Optional|From the Representativeness codelist https://github.com/wmo-im/wmds/blob/Development/tables_en/1-05.csv|`toposcale`|WIGOS Metadata Representation, Section 7.2.2
 
 Child objects:
+* equipment
 * data_generation
+
+#### `equipment`
+The `equipment` object is a child of the `deployment` and allows for specifying 0..1 child objects.
+
+Property Name|Mandatory/Optional|Description|Example|Reference
+-------------|------------------|-----------|-------|---------:
+manufacturer|Optional|Manufacturer of the equipment|`Logotronic`|WIGOS Metadata Representation, Section 4.5
+model|Optional|Model(number) of the equipment|`Gealog NTC Temperature Sensor`|WIGOS Metadata Representation, Section 4.5
+observing_method|Mandatory|The method of measurement/observation used from the 
+ObservingMethodType codelist. https://github.com/wmo-im/wmds/blob/Development/tables_en/5-02-01.csv - 5-02-05.csv|188|WIGOS Metadata Representation, Section 4.5
+observable_range|Optional| Intrinsic capability of the measurement/observing method - range|`-50 .. 60°C`|WIGOS Metadata Representation, Section 4.5
 
 #### `data_generation`
 The `data_generation` object is a child of the `deployment` and allows for specifying 1..n child objects. At least one child object is required.
@@ -195,7 +207,7 @@ start_minute|Mandatory|Start minute of schedule (0 to 59)|0|WIGOS Metadata Repre
 start_month|Mandatory|Start month of schedule (January = 1, December = 12)|1|WIGOS Metadata Representation, Section 7.4.2
 start_weekday|Mandatory|Start day of schedule (Monday = 1, Sunday = 7)|7|WIGOS Metadata Representation, Section 7.4.2
 
-#### 'reporting'
+#### `reporting`
 The `reporting` object is a child of the `data_generation` object. Exactly one child object is required.
 
 Property Name|Mandatory/Optional|Description|Example|Reference

@@ -179,6 +179,11 @@ facility:
                     communication_method: 'dataCellular'
                     exposure: 'class1'
                     representativeness: 'toposcale'
+                    equipment:
+                        manufacturer: 'Logotronic'
+                        model: 'Gealog NTC Temperature Sensor'
+                        observing_method: 188
+                        observable_range: '-50  60°C'
                     data_generation:
                         - valid_period:
                               begin: 2000-11-11

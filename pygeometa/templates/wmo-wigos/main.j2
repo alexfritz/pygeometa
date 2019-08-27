@@ -215,7 +215,24 @@
                                     <wmdr:Process gml:id="id-obs_{{ obs_loop.index }}_proc_{{ depl_loop.index }}">
                                         <wmdr:deployment>
                                             <wmdr:Deployment gml:id="id-obs_{{ obs_loop.index }}_dep_{{ depl_loop.index }}">
+                                                {% if obs_depl['equipment'] %}
+                                                <wmdr:deployedEquipment>
+                                                    <wmdr:Equipment gml:id="id-obs_{{ obs_loop.index }}_dep_{{ depl_loop.index }}_equipment">
+                                                        {% if obs_depl['equipment']['manufacturer'] %}
+                                                            <wmdr:manufacturer>{{ obs_depl['equipment']['manufacturer'] }}</wmdr:manufacturer>
+                                                        {% endif %}
+                                                        {% if obs_depl['equipment']['model'] %}
+                                                            <wmdr:model>{{ obs_depl['equipment']['model'] }}</wmdr:model>
+                                                        {% endif %}
+                                                        <wmdr:observingMethod xlink:href="http://codes.wmo.int/wmdr/ObservingMethod/{{ obs_depl['equipment']['observing_method'] }}"/>
+                                                        {% if obs_depl['equipment']['observable_range'] %}
+                                                            <wmdr:observableRange>{{ obs_depl['equipment']['observable_range'] }}</wmdr:observableRange>
+                                                        {% endif %}
+                                                    </wmdr:Equipment>
+                                                </wmdr:deployedEquipment>
+                                                {% else %}
                                                 <wmdr:deployedEquipment/>
+                                                {% endif %}
                                                 {% for obs_depl_dg in obs_depl['data_generation']%}
                                                 {% set dg_loop = loop %}
                                                 <wmdr:dataGeneration>
